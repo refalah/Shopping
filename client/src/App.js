@@ -1,20 +1,25 @@
+import "bootstrap/dist/css/bootstrap.min.css";
+import Navbars from "./components/Navbar";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  // Navigate,
+} from "react-router-dom";
+import Home from "./pages/Home";
+
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Router>
+        <Navbars />
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          {/* <Route exact path="/pokemon/:id" element={<Details />} />
+        <Route exact path="/my-pokemon" element={<MyPokemon />} /> */}
+        </Routes>
+      </Router>
+    </>
   );
 }
 
