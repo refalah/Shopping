@@ -7,7 +7,7 @@ const Home = () => {
     <div className="container">
       <div className="cards">
         <div className="row">
-          {products.map((product, index) => (
+          {products?.map((product, index) => (
             <div className="col" style={{ padding: 10 }}>
               {/* <CardMain data={poke} type={"og"} /> */}
               <CardProduct />

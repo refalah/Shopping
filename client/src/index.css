@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.btn {
+  display: block;
+  height: 45px;
+  padding: 10px;
+  border-radius: 5px;
+  border: solid 1px #ccd0e8;
+  background: aqua;
+  /* font: normal normal 400 16px "Poppins", sans-serif; */
+  margin-top: 10px;
+  outline: none;
+}

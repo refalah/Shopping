@@ -31,12 +31,21 @@ exports.getDetails = async (req, res) => {
 
 exports.createProducts = async (req, res) => {
   try {
-    const user = await Products.create(req.body);
+    console.log("Creating...");
+    const img = req.files.imageFile[0].filename;
+
+    if (img == null) {
+      return res.send({
+        status: "failed",
+        message: "image does not exist",
+      });
+    }
+    const product = await Products.create({ ...req.body, product_img: img });
 
     res.send({
       code: 0,
       message: "Berhasil ",
-      data: user,
+      data: product,
     });
   } catch (error) {
     console.log(error);

@@ -7,11 +7,12 @@ const {
   editProducts,
   deleteProducts,
 } = require("../controllers/product");
+const { uploadFile } = require("../middlewares/upload");
 const router = express.Router();
 
 router.get("/products", getAll);
 router.get("/product/:id", getDetails);
-router.post("/product", createProducts);
+router.post("/product", uploadFile("imageFile"), createProducts);
 router.patch("/product/:id", editProducts);
 router.delete("/product/:id", deleteProducts);
 

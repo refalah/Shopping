@@ -7,6 +7,8 @@ import {
   // Navigate,
 } from "react-router-dom";
 import Home from "./pages/Home";
+import CreateProduct from "./pages/CreateProduct";
+import Products from "./pages/Products";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <Navbars />
         <Routes>
           <Route exact path="/" element={<Home />} />
+          <Route exact path="/products" element={<Products />} />
+          <Route exact path="/create-product" element={<CreateProduct />} />
           {/* <Route exact path="/pokemon/:id" element={<Details />} />
         <Route exact path="/my-pokemon" element={<MyPokemon />} /> */}
         </Routes>
