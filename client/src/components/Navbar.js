@@ -8,7 +8,9 @@ const Navbars = () => {
     <div>
       <Navbar bg="dark" variant="dark" expand="lg" className="mb-3">
         <Container>
-          <Navbar.Brand onClick={() => router("/")}>Tech Shop</Navbar.Brand>
+          <Navbar.Brand className="brand" onClick={() => router("/")}>
+            Tech Shop
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
@@ -16,7 +18,7 @@ const Navbars = () => {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Nav.Link onClick={() => router("/products")}>Products</Nav.Link>
+              {/* <Nav.Link onClick={() => router("/products")}>Products</Nav.Link> */}
               <Nav.Link onClick={() => router("/")}>Wishlist</Nav.Link>
             </Nav>
           </Navbar.Collapse>

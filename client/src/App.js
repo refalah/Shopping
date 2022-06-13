@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import CreateProduct from "./pages/CreateProduct";
 import Products from "./pages/Products";
 import Details from "./pages/Details";
+import EditProduct from "./pages/EditProduct";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route exact path="/products" element={<Products />} />
           <Route exact path="/create-product" element={<CreateProduct />} />
           <Route exact path="/product/:id" element={<Details />} />
+          <Route exact path="/edit-product/:id" element={<EditProduct />} />
           {/* <Route exact path="/my-pokemon" element={<MyPokemon />} />  */}
         </Routes>
       </Router>

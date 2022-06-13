@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { API } from "../config/api";
 
-const CreateProduct = () => {
+const EditProduct = () => {
   const router = useNavigate();
+  const { id } = useParams();
   const [form, setForm] = useState({ product_img: null });
+
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -14,6 +16,13 @@ const CreateProduct = () => {
     });
     console.log(form, "DAA");
   };
+
+  const [data, setData] = useState();
+  const loadData = async () => {
+    const res = await API.get(`/product/${id}`);
+    setForm(res.data.data);
+  };
+
   const handleSubmit = async () => {
     try {
       const config = {
@@ -28,7 +37,7 @@ const CreateProduct = () => {
       formData.set("product_price", form.product_price);
       formData.set("product_description", form.product_description);
 
-      const response = await API.post("/product", formData, config);
+      const response = await API.patch(`/product/${id}`, formData, config);
       router(-1);
     } catch (error) {
       console.log(error);
@@ -37,17 +46,39 @@ const CreateProduct = () => {
 
   const [chosenFile, setChosenFile] = useState();
 
+  const handlePreview = async (e) => {
+    //pictureSelected(e);
+    if (e.target.files[0]) {
+      let reader = new FileReader();
+      reader.onloadend = () => {
+        setChosenFile(reader.result);
+      };
+      reader.readAsDataURL(e.target.files[0]);
+      setForm({
+        ...form,
+        [e.target.name]:
+          e.target.type === "file" ? e.target.files[0] : e.target.value,
+      });
+    }
+  };
+
   useEffect(() => {
+    loadData();
+  }, []);
+
+  useEffect(() => {
+    if (form.product_img) {
+      setChosenFile(form.product_img);
+      return;
+    }
+
     if (!form.product_img) {
       setChosenFile(undefined);
       return;
     }
-
-    const objectUrl = URL.createObjectURL(form.product_img);
-    setChosenFile(objectUrl);
-
-    return () => URL.revokeObjectURL(objectUrl);
   }, [form.product_img]);
+
+  console.log(form?.product_img, "img");
 
   return (
     <div className="container">
@@ -57,6 +88,7 @@ const CreateProduct = () => {
           <Form.Control
             type="text"
             name="product_title"
+            value={form?.product_title}
             placeholder="Enter name of product"
             onChange={(e) => handleChange(e)}
           />
@@ -67,6 +99,7 @@ const CreateProduct = () => {
             as={"textarea"}
             type="text"
             name="product_description"
+            value={form?.product_description}
             placeholder="Enter description"
             onChange={(e) => handleChange(e)}
           />
@@ -76,6 +109,7 @@ const CreateProduct = () => {
           <Form.Control
             type="number"
             name="product_price"
+            value={form?.product_price}
             placeholder="Enter price"
             onChange={(e) => handleChange(e)}
           />
@@ -87,7 +121,7 @@ const CreateProduct = () => {
               type="file"
               id="add-thumb"
               name="product_img"
-              onChange={(e) => handleChange(e)}
+              onChange={(e) => handlePreview(e)}
               hidden
             />
             <label for="add-thumb" id="label-thumb" className="btn-img">
@@ -96,19 +130,19 @@ const CreateProduct = () => {
           </div>
         </Form.Group>
         <div>
-          {
+          {chosenFile && (
             <img
               src={chosenFile}
               style={{
                 maxHeight: "200px",
               }}
             />
-          }
+          )}
         </div>
-        <Button onClick={() => handleSubmit()}>Create</Button>
+        <Button onClick={() => handleSubmit()}>Edit</Button>
       </Form>
     </div>
   );
 };
 
-export default CreateProduct;
+export default EditProduct;

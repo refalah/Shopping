@@ -7,6 +7,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.brand {
+  cursor: pointer;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -24,9 +28,16 @@ code {
   outline: none;
 }
 
+.btn-img {
+  background: lightgreen;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
 .new-img {
   width: 200px;
-  height: 200px;
+  /* height: 200px; */
   object-fit: cover;
 }
 
@@ -35,4 +46,14 @@ code {
   width: 200px;
   height: 200px;
   object-fit: cover;
+}
+
+.card:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.list {
+  /* border: solid 1px #525252; */
+  color: salmon;
 }

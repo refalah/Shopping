@@ -1,6 +1,8 @@
+const e = require("express");
 const multer = require("multer");
 
 exports.uploadFile = (imageFile, videoFile) => {
+  console.log("START", imageFile);
   //initialisasi multer diskstorage
   //menentukan destionation file diupload
   //menentukan nama file (rename agar tidak ada nama file ganda)
@@ -16,6 +18,7 @@ exports.uploadFile = (imageFile, videoFile) => {
 
   //function untuk filter file berdasarkan type
   const fileFilter = function (req, file, cb) {
+    console.log("here now");
     if (file.fieldname === imageFile) {
       if (!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
         req.fileValidationError = {
@@ -23,6 +26,8 @@ exports.uploadFile = (imageFile, videoFile) => {
         };
         return cb(new Error("Only image files are allowed!"), false);
       }
+    } else {
+      cb(null, true);
     }
 
     if (file.fieldname === videoFile) {
@@ -32,6 +37,8 @@ exports.uploadFile = (imageFile, videoFile) => {
         };
         return cb(new Error("Only Video files are allowed!"), false);
       }
+    } else {
+      cb(null, true);
     }
     cb(null, true);
   };
@@ -59,16 +66,20 @@ exports.uploadFile = (imageFile, videoFile) => {
 
   //middleware handler
   return (req, res, next) => {
+    console.log("here");
     upload(req, res, function (err) {
       //munculkan error jika validasi gagal
-      if (req.fileValidationError)
+      if (req.fileValidationError) {
         return res.status(400).send(req.fileValidationError);
+      }
 
       //munculkan error jika file tidak disediakan
-      if (!req.files && !err)
+      if (!req.files && !err) {
+        console.log("here");
         return res.status(400).send({
           message: "Please select files to upload",
         });
+      }
 
       //munculkan error jika melebihi max size
       if (err) {

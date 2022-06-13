@@ -87,12 +87,17 @@ exports.createProducts = async (req, res) => {
 exports.editProducts = async (req, res) => {
   const id = req.params.id;
   try {
-    const user = await Products.update({ ...req.body }, { where: { id } });
+    const img = req.files.imageFile[0].filename;
+    console.log(img, "img");
+    const product = await Products.update(
+      { ...req.body, product_img: img },
+      { where: { id } }
+    );
 
     res.send({
       code: 0,
       message: "Berhasil ",
-      data: user,
+      data: product,
     });
   } catch (error) {
     console.log(error);
@@ -102,12 +107,11 @@ exports.editProducts = async (req, res) => {
 exports.deleteProducts = async (req, res) => {
   const id = req.params.id;
   try {
-    const user = await Products.destroy({ where: { id } });
+    await Products.destroy({ where: { id } });
 
     res.send({
       code: 0,
       message: "Berhasil ",
-      data: user,
     });
   } catch (error) {
     console.log(error);
