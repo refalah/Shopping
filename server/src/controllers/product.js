@@ -1,13 +1,29 @@
 const { Products } = require("../../models");
+require("dotenv").config();
+
+const { IMG_PATH } = process.env;
 
 exports.getAll = async (req, res) => {
   try {
-    const user = await Products.findAll();
+    const path = IMG_PATH;
 
+    let product = await Products.findAll({
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+    });
+
+    product = JSON.parse(JSON.stringify(product));
+    product = product.map((p) => {
+      return {
+        ...p,
+        product_img: path + p.product_img,
+      };
+    });
     res.send({
       code: 0,
       message: "Berhasil ",
-      data: user,
+      data: product,
     });
   } catch (error) {
     console.log(error);
@@ -17,12 +33,28 @@ exports.getAll = async (req, res) => {
 exports.getDetails = async (req, res) => {
   const id = req.params.id;
   try {
-    const user = await Products.findOne({ where: { id } });
+    const path = IMG_PATH;
+
+    let product = await Products.findOne({
+      where: { id },
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+    });
+
+    product.product_img = path + product.product_img;
+    // product = JSON.parse(JSON.stringify(product));
+    // product = product.map((p) => {
+    //   return {
+    //     ...p,
+    //     product_img: path + p.product_img,
+    //   };
+    // });
 
     res.send({
       code: 0,
       message: "Berhasil ",
-      data: user,
+      data: product,
     });
   } catch (error) {
     console.log(error);

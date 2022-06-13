@@ -1,8 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CardProduct from "../components/CardProduct";
+import { API } from "../config/api";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
+  const loadData = async () => {
+    const res = await API.get("/products");
+    setProducts(res.data.data);
+  };
+  useEffect(() => {
+    loadData();
+  }, []);
+
   return (
     <div className="container">
       <div className="cards">
@@ -10,7 +19,7 @@ const Home = () => {
           {products?.map((product, index) => (
             <div className="col" style={{ padding: 10 }}>
               {/* <CardMain data={poke} type={"og"} /> */}
-              <CardProduct />
+              <CardProduct data={product} />
             </div>
           ))}
         </div>

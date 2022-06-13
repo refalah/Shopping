@@ -23,3 +23,16 @@ code {
   margin-top: 10px;
   outline: none;
 }
+
+.new-img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-img {
+  /* max-width: 200px; */
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
