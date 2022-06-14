@@ -2,21 +2,38 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { API } from "../config/api";
+import { actions } from "../store";
 
 const Details = () => {
   const router = useNavigate();
   const { id } = useParams();
+  const dispatch = useDispatch();
   const [data, setData] = useState();
   const [coin, setCoin] = useState(false);
+  const products = useSelector((state) => state.wishList);
+  const exist = products.find((item) => item.id == id);
   const loadData = async () => {
     const res = await API.get(`/product/${id}`);
     setData(res.data.data);
   };
-  console.log(data, "data");
-  const addWishlist = () => {
-    setCoin(!coin);
+  const handleWishlist = () => {
+    // setCoin(!coin);
+    if (!exist) {
+      dispatch(
+        actions.createWishlist({
+          id,
+          product_title: data?.product_title,
+          product_description: data?.product_description,
+          product_price: data?.product_price,
+          product_img: data?.product_img,
+        })
+      );
+    } else {
+      dispatch(actions.removeWishlist(id));
+    }
   };
   useEffect(() => {
     loadData();
@@ -34,8 +51,8 @@ const Details = () => {
         </Button>
         <FontAwesomeIcon
           icon={faHeart}
-          className={`ml-5 mt-2 ${coin ? "list" : null} `}
-          onClick={() => addWishlist()}
+          className={`ml-5 mt-2 ${exist ? "list" : null} `}
+          onClick={() => handleWishlist()}
           style={{ cursor: "pointer" }}
           size="lg"
         />

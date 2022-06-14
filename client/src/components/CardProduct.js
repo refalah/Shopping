@@ -3,7 +3,7 @@ import { Button, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { API } from "../config/api";
 
-const CardProduct = ({ data, load }) => {
+const CardProduct = ({ data, load, type }) => {
   const router = useNavigate();
   const deleteProduct = async () => {
     const res = await API.delete(`/product/${data.id}`);
@@ -15,16 +15,22 @@ const CardProduct = ({ data, load }) => {
       <Card.Body>
         <Card.Title>{data.product_title}</Card.Title>
         <Card.Text>{data.product_description}</Card.Text>
-        <div className="d-flex justify-content-between">
+        <div
+          style={{ flexDirection: "column" }}
+          className="d-flex justify-content-evenly"
+        >
           <Button
             variant="primary"
+            className="w-100"
             onClick={() => router(`/product/${data.id}`)}
           >
             Details
           </Button>
-          <Button variant="danger" onClick={() => deleteProduct()}>
-            Delete
-          </Button>
+          {type != "wish" ? (
+            <Button variant="danger" onClick={() => deleteProduct()}>
+              Delete
+            </Button>
+          ) : null}
         </div>
       </Card.Body>
     </Card>

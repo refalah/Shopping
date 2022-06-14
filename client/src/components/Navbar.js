@@ -19,7 +19,7 @@ const Navbars = () => {
               navbarScroll
             >
               {/* <Nav.Link onClick={() => router("/products")}>Products</Nav.Link> */}
-              <Nav.Link onClick={() => router("/")}>Wishlist</Nav.Link>
+              <Nav.Link onClick={() => router("/wishlist")}>Wishlist</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

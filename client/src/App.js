@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import Home from "./pages/Home";
 import CreateProduct from "./pages/CreateProduct";
-import Products from "./pages/Products";
+import Wishlist from "./pages/Wishlist";
 import Details from "./pages/Details";
 import EditProduct from "./pages/EditProduct";
 
@@ -19,7 +19,7 @@ function App() {
         <Navbars />
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route exact path="/products" element={<Products />} />
+          <Route exact path="/wishlist" element={<Wishlist />} />
           <Route exact path="/create-product" element={<CreateProduct />} />
           <Route exact path="/product/:id" element={<Details />} />
           <Route exact path="/edit-product/:id" element={<EditProduct />} />
